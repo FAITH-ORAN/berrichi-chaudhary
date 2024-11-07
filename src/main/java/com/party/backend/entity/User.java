@@ -8,7 +8,9 @@ import lombok.Data;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users",indexes = {
+        @Index(name = "idx_user_email", columnList = "email")
+})
 @Data
 public class User {
 
@@ -38,6 +40,9 @@ public class User {
 
     private String interests;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private Location location;
+
     /* Relation avec ProfileRating (One-to-Many), avec FetchType.LAZY
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -48,10 +53,6 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<Participation> participations;
 
-    // Relation avec Location (One-to-Many), avec FetchType.LAZY
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private List<Location> locations;
 
     // Relation avec Message (One-to-Many pour l’envoi et la réception), avec FetchType.LAZY
     @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
