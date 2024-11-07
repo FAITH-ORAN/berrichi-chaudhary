@@ -313,3 +313,40 @@
 1731017162944|1|statement|update events set available_seats=30,event_date_time='2024-11-10T19:00:00.000+0100',event_name='Board Game Nithbgthtrtyght dfbwhdtbhtg updated data',event_type_id=4,is_paid=true,organizer_id=10,price=300.0 where id=20
 1731017162946|0|commit|
 1731017176229|0|statement|select l1_0.city from locations l1_0 where l1_0.event_id=20
+1731017699292|12|statement|select * from information_schema.sequences
+1731017699318|5|statement|     create index idx_event_type_id         on events (event_type_id)
+1731017699320|1|statement|     create index idx_event_date_time         on events (event_date_time)
+1731017699322|1|statement|     create index idx_location_id         on events (location_id)
+1731017699344|0|statement|select * from "public"."event_types" where 1=0
+1731017699349|0|statement|select * from "public"."users" where 1=0
+1731017699368|0|statement|select * from "public"."events" where 1=0
+1731017699372|0|statement|select * from "public"."users" where 1=0
+1731017743541|1|statement|select et1_0.event_type_id,et1_0.description,et1_0.type_name from event_types et1_0 where et1_0.event_type_id=4
+1731017743545|0|commit|
+1731017743548|0|statement|select u1_0.users_id,u1_0.age,u1_0.email,u1_0.interests,u1_0.password,u1_0.pseudo from users u1_0 where u1_0.users_id=10
+1731017743553|2|statement|select l1_0.id,l1_0.address,l1_0.city,l1_0.event_id,e1_0.id,e1_0.available_seats,e1_0.event_date_time,e1_0.event_name,e1_0.event_type_id,et1_0.event_type_id,et1_0.description,et1_0.type_name,e1_0.is_paid,e1_0.organizer_id,o1_0.users_id,o1_0.age,o1_0.email,o1_0.interests,o1_0.password,o1_0.pseudo,e1_0.price,l1_0.user_id from locations l1_0 join events e1_0 on e1_0.id=l1_0.event_id left join event_types et1_0 on et1_0.event_type_id=e1_0.event_type_id left join users o1_0 on o1_0.users_id=e1_0.organizer_id where l1_0.user_id=10
+1731017743554|0|commit|
+1731017743565|2|statement|insert into events (available_seats,event_date_time,event_name,event_type_id,is_paid,organizer_id,price) values (20,'2024-11-10T19:00:00.000+0100','Board Game Night dfbwhdtbhtg',4,true,10,20.0) returning id
+1731017743572|0|commit|
+1731017749867|1|statement|select e1_0.id,e1_0.available_seats,e1_0.event_date_time,e1_0.event_name,e1_0.event_type_id,et1_0.event_type_id,et1_0.description,et1_0.type_name,e1_0.is_paid,l1_0.id,l1_0.address,l1_0.city,l1_0.event_id,l1_0.user_id,e1_0.organizer_id,o1_0.users_id,o1_0.age,o1_0.email,o1_0.interests,o1_0.password,o1_0.pseudo,e1_0.price from events e1_0 join event_types et1_0 on et1_0.event_type_id=e1_0.event_type_id left join locations l1_0 on e1_0.id=l1_0.event_id join users o1_0 on o1_0.users_id=e1_0.organizer_id where e1_0.id=20
+1731017749869|0|statement|select l1_0.id,l1_0.address,l1_0.city,l1_0.event_id,e1_0.id,e1_0.available_seats,e1_0.event_date_time,e1_0.event_name,e1_0.event_type_id,et1_0.event_type_id,et1_0.description,et1_0.type_name,e1_0.is_paid,e1_0.organizer_id,o1_0.users_id,o1_0.age,o1_0.email,o1_0.interests,o1_0.password,o1_0.pseudo,e1_0.price,l1_0.user_id from locations l1_0 join events e1_0 on e1_0.id=l1_0.event_id left join event_types et1_0 on et1_0.event_type_id=e1_0.event_type_id left join users o1_0 on o1_0.users_id=e1_0.organizer_id where l1_0.user_id=10
+1731017749870|0|commit|
+1731017775193|0|statement|select l1_0.id,l1_0.address,l1_0.city,l1_0.event_id,l1_0.user_id from locations l1_0 where l1_0.event_id=20
+1731017775197|1|statement|select e1_0.id,e1_0.available_seats,e1_0.event_date_time,e1_0.event_name,e1_0.event_type_id,et1_0.event_type_id,et1_0.description,et1_0.type_name,e1_0.is_paid,l1_0.id,l1_0.address,l1_0.city,l1_0.event_id,l1_0.user_id,e1_0.organizer_id,o1_0.users_id,o1_0.age,o1_0.email,o1_0.interests,o1_0.password,o1_0.pseudo,e1_0.price from events e1_0 join event_types et1_0 on et1_0.event_type_id=e1_0.event_type_id left join locations l1_0 on e1_0.id=l1_0.event_id join users o1_0 on o1_0.users_id=e1_0.organizer_id where e1_0.id=20
+1731017775199|0|statement|select l1_0.id,l1_0.address,l1_0.city,l1_0.event_id,e1_0.id,e1_0.available_seats,e1_0.event_date_time,e1_0.event_name,e1_0.event_type_id,et1_0.event_type_id,et1_0.description,et1_0.type_name,e1_0.is_paid,e1_0.organizer_id,o1_0.users_id,o1_0.age,o1_0.email,o1_0.interests,o1_0.password,o1_0.pseudo,e1_0.price,l1_0.user_id from locations l1_0 join events e1_0 on e1_0.id=l1_0.event_id left join event_types et1_0 on et1_0.event_type_id=e1_0.event_type_id left join users o1_0 on o1_0.users_id=e1_0.organizer_id where l1_0.user_id=10
+1731017775203|0|commit|
+1731017775210|1|statement|update locations set address='Dhungedhara marg',city='Kathmandu',event_id=20,user_id=10 where id=10
+1731017775211|0|commit|
+1731017865125|2|statement|select l1_0.id,l1_0.address,l1_0.city,l1_0.event_id,l1_0.user_id from locations l1_0 where l1_0.event_id=20
+1731017865131|3|statement|select e1_0.id,e1_0.available_seats,e1_0.event_date_time,e1_0.event_name,e1_0.event_type_id,et1_0.event_type_id,et1_0.description,et1_0.type_name,e1_0.is_paid,l1_0.id,l1_0.address,l1_0.city,l1_0.event_id,l1_0.user_id,e1_0.organizer_id,o1_0.users_id,o1_0.age,o1_0.email,o1_0.interests,o1_0.password,o1_0.pseudo,e1_0.price from events e1_0 join event_types et1_0 on et1_0.event_type_id=e1_0.event_type_id left join locations l1_0 on e1_0.id=l1_0.event_id join users o1_0 on o1_0.users_id=e1_0.organizer_id where e1_0.id=20
+1731017865135|2|statement|select l1_0.id,l1_0.address,l1_0.city,l1_0.event_id,e1_0.id,e1_0.available_seats,e1_0.event_date_time,e1_0.event_name,e1_0.event_type_id,et1_0.event_type_id,et1_0.description,et1_0.type_name,e1_0.is_paid,e1_0.organizer_id,o1_0.users_id,o1_0.age,o1_0.email,o1_0.interests,o1_0.password,o1_0.pseudo,e1_0.price,l1_0.user_id from locations l1_0 join events e1_0 on e1_0.id=l1_0.event_id left join event_types et1_0 on et1_0.event_type_id=e1_0.event_type_id left join users o1_0 on o1_0.users_id=e1_0.organizer_id where l1_0.user_id=10
+1731017869113|1|statement|select l1_0.id,l1_0.address,l1_0.city,l1_0.event_id,l1_0.user_id from locations l1_0 where l1_0.city='New York' and l1_0.event_id is not null
+1731017874362|0|statement|select l1_0.city from locations l1_0 where l1_0.event_id=20
+1731017880104|1|statement|select e1_0.id,e1_0.available_seats,e1_0.event_date_time,e1_0.event_name,e1_0.event_type_id,et1_0.event_type_id,et1_0.description,et1_0.type_name,e1_0.is_paid,l1_0.id,l1_0.address,l1_0.city,l1_0.event_id,l1_0.user_id,e1_0.organizer_id,o1_0.users_id,o1_0.age,o1_0.email,o1_0.interests,o1_0.password,o1_0.pseudo,e1_0.price from events e1_0 join event_types et1_0 on et1_0.event_type_id=e1_0.event_type_id left join locations l1_0 on e1_0.id=l1_0.event_id join users o1_0 on o1_0.users_id=e1_0.organizer_id where e1_0.id=20
+1731017880107|1|statement|select l1_0.id,l1_0.address,l1_0.city,l1_0.event_id,e1_0.id,e1_0.available_seats,e1_0.event_date_time,e1_0.event_name,e1_0.event_type_id,et1_0.event_type_id,et1_0.description,et1_0.type_name,e1_0.is_paid,e1_0.organizer_id,o1_0.users_id,o1_0.age,o1_0.email,o1_0.interests,o1_0.password,o1_0.pseudo,e1_0.price,l1_0.user_id from locations l1_0 join events e1_0 on e1_0.id=l1_0.event_id left join event_types et1_0 on et1_0.event_type_id=e1_0.event_type_id left join users o1_0 on o1_0.users_id=e1_0.organizer_id where l1_0.user_id=10
+1731017880108|0|commit|
+1731017880110|0|commit|
+1731017886099|0|statement|select count(*) from events e1_0 where e1_0.id=20
+1731017886099|0|commit|
+1731017886107|1|statement|delete from events e1_0 where e1_0.id=20
+1731017886114|0|rollback|
