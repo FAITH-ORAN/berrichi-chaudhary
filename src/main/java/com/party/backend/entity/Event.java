@@ -36,6 +36,8 @@ public class Event {
     @JoinColumn(name = "organizer_id", nullable = false)
     private User organizer;
 
+    @OneToOne(mappedBy = "event", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private Location location;
 
 
     // Explicit getter and setter for MapStruct
