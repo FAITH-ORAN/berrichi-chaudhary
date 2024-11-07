@@ -40,15 +40,18 @@ public class User {
 
     private String interests;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Location location;
 
-    /* Relation avec ProfileRating (One-to-Many), avec FetchType.LAZY
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private List<ProfileRating> ratings;
+    // Relation avec ProfileRating en tant que 'ratedUser' (l'utilisateur noté)
+    @OneToMany(mappedBy = "ratedUser", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ProfileRating> receivedRatings;
 
-    // Relation avec Participation (One-to-Many), avec FetchType.LAZY
+    // Relation avec ProfileRating en tant que 'ratingUser' (l'utilisateur qui note)
+    @OneToMany(mappedBy = "ratingUser", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ProfileRating> givenRatings;
+
+    /* Relation avec Participation (One-to-Many), avec FetchType.LAZY
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private List<Participation> participations;
