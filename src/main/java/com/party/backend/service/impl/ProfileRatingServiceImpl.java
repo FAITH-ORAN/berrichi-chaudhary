@@ -64,7 +64,7 @@ public class ProfileRatingServiceImpl implements ProfileRatingService {
     }
 
     @Override
-    @Cacheable(value = "profileRatings", key = "#userId")
+    //@Cacheable(value = "profileRatings", key = "#userId")
     public List<ProfileRatingDto> getAllRatingsForUser(Long userId) {
         return profileRatingRepository.findAllByRatedUserIdWithRatingUser(userId)
                 .stream()
