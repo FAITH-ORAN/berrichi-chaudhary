@@ -296,3 +296,20 @@
 1731014911752|0|statement|delete from locations where id=9
 1731014911754|0|statement|delete from events where id=19
 1731014911755|0|commit|
+1731017041042|13|statement|select * from information_schema.sequences
+1731017041089|0|statement|select * from "public"."event_types" where 1=0
+1731017041096|1|statement|select * from "public"."users" where 1=0
+1731017041115|1|statement|select * from "public"."events" where 1=0
+1731017041120|0|statement|select * from "public"."users" where 1=0
+1731017077035|5|statement|select count(*) from events e1_0 where e1_0.id=19
+1731017077039|1|commit|
+1731017112172|1|statement|select count(*) from events e1_0 where e1_0.id=20
+1731017112173|0|commit|
+1731017112205|8|statement|delete from events e1_0 where e1_0.id=20
+1731017112210|0|rollback|
+1731017162917|1|statement|select e1_0.id,e1_0.available_seats,e1_0.event_date_time,e1_0.event_name,e1_0.event_type_id,et1_0.event_type_id,et1_0.description,et1_0.type_name,e1_0.is_paid,l1_0.id,l1_0.address,l1_0.city,l1_0.event_id,l1_0.user_id,e1_0.organizer_id,o1_0.users_id,o1_0.age,o1_0.email,o1_0.interests,o1_0.password,o1_0.pseudo,e1_0.price from events e1_0 join event_types et1_0 on et1_0.event_type_id=e1_0.event_type_id left join locations l1_0 on e1_0.id=l1_0.event_id join users o1_0 on o1_0.users_id=e1_0.organizer_id where e1_0.id=20
+1731017162926|1|statement|select l1_0.id,l1_0.address,l1_0.city,l1_0.event_id,e1_0.id,e1_0.available_seats,e1_0.event_date_time,e1_0.event_name,e1_0.event_type_id,et1_0.event_type_id,et1_0.description,et1_0.type_name,e1_0.is_paid,e1_0.organizer_id,o1_0.users_id,o1_0.age,o1_0.email,o1_0.interests,o1_0.password,o1_0.pseudo,e1_0.price,l1_0.user_id from locations l1_0 join events e1_0 on e1_0.id=l1_0.event_id left join event_types et1_0 on et1_0.event_type_id=e1_0.event_type_id left join users o1_0 on o1_0.users_id=e1_0.organizer_id where l1_0.user_id=10
+1731017162928|0|commit|
+1731017162944|1|statement|update events set available_seats=30,event_date_time='2024-11-10T19:00:00.000+0100',event_name='Board Game Nithbgthtrtyght dfbwhdtbhtg updated data',event_type_id=4,is_paid=true,organizer_id=10,price=300.0 where id=20
+1731017162946|0|commit|
+1731017176229|0|statement|select l1_0.city from locations l1_0 where l1_0.event_id=20

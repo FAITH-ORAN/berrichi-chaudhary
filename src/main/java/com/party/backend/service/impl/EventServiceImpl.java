@@ -10,7 +10,10 @@ import com.party.backend.repository.UserRepository;
 import com.party.backend.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -54,6 +57,23 @@ public class EventServiceImpl implements EventService {
         return eventRepository.findById(id).map(eventMapper::toDto);
     }
 
+
+    @Override
+    public List<EventDto> getEventsByCity(String city) {
+        return eventRepository.findAllByCity(city).stream()
+                .map(eventMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<EventDto> getEventWithLocation(Long id) {
+        return eventRepository.findByIdWithLocation(id).map(eventMapper::toDto);
+    }
+
+    @Override
+    public Optional<EventDto> getEventWithEventType(Long id) {
+        return eventRepository.findByIdWithEventType(id).map(eventMapper::toDto);
+    }
 
     @Override
     public EventDto updateEvent(Long id, EventDto eventDto) {
