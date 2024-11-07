@@ -4,8 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "locations",  indexes = {
-        @Index(name = "idx_location_city", columnList = "city")})
+@Table(name = "locations", indexes = {
+        @Index(name = "idx_location_city", columnList = "city")
+})
 @Data
 public class Location {
 
@@ -23,9 +24,8 @@ public class Location {
     @JoinColumn(name = "user_id", unique = true)
     private User user;
 
-    /* Relation OneToOne avec Event (chaque événement a une localisation spécifique)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id", unique = true)  // Unique car chaque événement a une seule localisation
-    private Event event;*/
+    // Add event_id as foreign key from Event
+    @OneToOne
+    @JoinColumn(name = "event_id", referencedColumnName = "id", unique = true, nullable = false)
+    private Event event;
 }
-
