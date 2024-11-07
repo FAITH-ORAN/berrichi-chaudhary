@@ -8,6 +8,8 @@ import com.party.backend.repository.LocationRepository;
 import com.party.backend.repository.UserRepository;
 import com.party.backend.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -26,6 +28,7 @@ public class LocationServiceImpl implements LocationService {
         this.locationMapper = locationMapper;
     }
     @Override
+    @CachePut(value = "locations", key = "#userId")
     public LocationDto saveOrUpdateUserLocation(Long userId, LocationDto locationDto) {
         Location location = locationRepository.findByUserId(userId)
                 .orElse(new Location());
@@ -41,6 +44,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
+    @Cacheable(value = "locations", key = "#userId")
     public Optional<String> getCityByUserId(Long userId) {
         return locationRepository.findCityByUserId(userId);
     }

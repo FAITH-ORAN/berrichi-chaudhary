@@ -8,7 +8,6 @@ public interface LocationService {
 
     LocationDto saveOrUpdateUserLocation(Long userId, LocationDto locationDto);
     Optional<String> getCityByUserId(Long userId);
-
      /* Ajouter ou mettre à jour la localisation pour un événement (commenté pour futur usage)
     LocationDto saveOrUpdateEventLocation(Long eventId, LocationDto locationDto);
 
