@@ -2,6 +2,7 @@ package com.party.backend.service.impl;
 
 import com.party.backend.dto.EventDto;
 import com.party.backend.entity.Event;
+import com.party.backend.entity.Location;
 import com.party.backend.mapper.EventMapper;
 import com.party.backend.repository.EventRepository;
 import com.party.backend.repository.EventTypeRepository;
@@ -92,9 +93,16 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public void deleteEvent(Long id) {
-        if (!eventRepository.existsById(id)) {
-            throw new RuntimeException("Event not found with ID: " + id);
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Event not found with ID: " + id));
+
+        // Manually delete associated Location if present
+        if (event.getLocation() != null) {
+            Location location = event.getLocation();
+            location.setEvent(null); // Break bi-directional relationship
+            locationRepository.delete(location); // Delete Location explicitly
         }
-        eventRepository.deleteById(id);
+
+        eventRepository.delete(event);
     }
 }

@@ -2,6 +2,8 @@ package com.party.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "locations", indexes = {
@@ -24,8 +26,8 @@ public class Location {
     @JoinColumn(name = "user_id", unique = true)
     private User user;
 
-    // Add event_id as foreign key from Event
-    @OneToOne
-    @JoinColumn(name = "event_id", referencedColumnName = "id", unique = true, nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "event_id", unique = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Event event;
 }

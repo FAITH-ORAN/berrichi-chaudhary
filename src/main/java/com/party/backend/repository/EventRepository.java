@@ -21,8 +21,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query("SELECT e FROM Event e JOIN FETCH e.eventType WHERE e.id = :id")
     Optional<Event> findByIdWithEventType(Long id);
 
-    @Query("SELECT e FROM Event e WHERE e.location.city = :city")
-    List<Event> findAllByCity(String city);
+    @Query("SELECT e FROM Event e JOIN e.location l WHERE l.city = :city")
+    List<Event> findAllByCity(@Param("city") String city);
 
     @Modifying
     @Transactional

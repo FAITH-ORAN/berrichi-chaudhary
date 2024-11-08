@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
         indexes = {
                 @Index(name = "idx_event_type_id", columnList = "event_type_id"),
                 @Index(name = "idx_event_date_time", columnList = "event_date_time"),
-                @Index(name = "idx_location_id", columnList = "location_id")
         })
 @Data
 public class Event {
@@ -41,7 +40,7 @@ public class Event {
     @JoinColumn(name = "organizer_id", nullable = false)
     private User organizer;
 
-    @OneToOne(mappedBy = "event", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToOne(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Location location;
 
     // Explicit getter and setter for MapStruct

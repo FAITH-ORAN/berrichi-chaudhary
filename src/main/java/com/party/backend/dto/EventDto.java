@@ -12,7 +12,6 @@ public class EventDto {
     private Double price;
     private Integer availableSeats;
     private Long eventTypeId;
-    private Long locationId;
     private Long organizerId;
 
 

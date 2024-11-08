@@ -16,7 +16,6 @@ public class EventType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "event_type_id")
     private Long id;
 
     @Column(name = "type_name", nullable = false)
