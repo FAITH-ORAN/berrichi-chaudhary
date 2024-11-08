@@ -19,4 +19,5 @@ public interface EventService {
     List<EventDto> getEventsByCity(String city);
 
     void deleteEvent(Long id);
+    Optional<EventDto> getEventWithLocationAndOrganizer(Long eventId);
 }

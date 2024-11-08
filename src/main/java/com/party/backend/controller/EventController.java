@@ -46,6 +46,13 @@ public class EventController {
         return ResponseEntity.ok(updatedEvent);
     }
 
+
+    @GetMapping("/location/{eventId}")
+    public ResponseEntity<EventDto> getEventWithLocationAndOrganizer(@PathVariable Long eventId) {
+        Optional<EventDto> eventDto = eventService.getEventWithLocationAndOrganizer(eventId);
+        return eventDto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {
         eventService.deleteEvent(id);

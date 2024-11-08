@@ -13,7 +13,8 @@ public class EventDto {
     private Integer availableSeats;
     private Long eventTypeId;
     private Long organizerId;
-
+    private String organizerPseudo;
+    private LocationDto location;
 
 
     // Explicit getter and setter for MapStruct

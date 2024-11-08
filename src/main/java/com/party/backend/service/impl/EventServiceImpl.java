@@ -1,6 +1,7 @@
 package com.party.backend.service.impl;
 
 import com.party.backend.dto.EventDto;
+import com.party.backend.dto.LocationDto;
 import com.party.backend.entity.Event;
 import com.party.backend.entity.Location;
 import com.party.backend.mapper.EventMapper;
@@ -97,6 +98,35 @@ public class EventServiceImpl implements EventService {
 
         event = eventRepository.save(event);
         return eventMapper.toDto(event);
+    }
+
+
+    @Override
+    public Optional<EventDto> getEventWithLocationAndOrganizer(Long eventId) {
+        Optional<Event> eventOpt = eventRepository.findEventWithLocationAndOrganizer(eventId);
+        return eventOpt.map(event -> {
+            EventDto eventDto = eventMapper.toDto(event);
+
+            // Set LocationDto
+            if (event.getLocation() != null) {
+                LocationDto locationDto = new LocationDto();
+                locationDto.setCity(event.getLocation().getCity());
+                locationDto.setAddress(event.getLocation().getAddress());
+                locationDto.setEventId(event.getId()); // Set the event ID explicitly
+
+                if (event.getLocation().getUser() != null) {
+                    locationDto.setUserId(event.getLocation().getUser().getId());
+                }
+
+                eventDto.setLocation(locationDto);
+            }
+
+            // Set Organizer pseudo
+            if (event.getOrganizer() != null) {
+                eventDto.setOrganizerPseudo(event.getOrganizer().getPseudo());
+            }
+            return eventDto;
+        });
     }
 
     @Override
