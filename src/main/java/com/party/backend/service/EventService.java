@@ -9,6 +9,8 @@ public interface EventService {
     EventDto saveEvent(EventDto eventDto);
     Optional<EventDto> getEventById(Long id);
 
+    List<EventDto> getAllEvents();
+
     Optional<EventDto> getEventWithLocation(Long id);
 
     Optional<EventDto> getEventWithEventType(Long id);

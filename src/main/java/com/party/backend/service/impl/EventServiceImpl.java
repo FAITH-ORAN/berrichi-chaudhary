@@ -60,6 +60,14 @@ public class EventServiceImpl implements EventService {
 
 
     @Override
+    public List<EventDto> getAllEvents() {
+        return eventRepository.findAllWithDetails()
+                .stream()
+                .map(eventMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<EventDto> getEventsByCity(String city) {
         return eventRepository.findAllByCity(city).stream()
                 .map(eventMapper::toDto)

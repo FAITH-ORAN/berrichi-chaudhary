@@ -33,4 +33,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Transactional
     @Query("UPDATE Event e SET e.eventName = :eventName, e.eventDateTime = :eventDateTime, e.isPaid = :isPaid, e.price = :price, e.availableSeats = :availableSeats WHERE e.id = :id")
     void updateEvent(Long id, String eventName, LocalDateTime eventDateTime, boolean isPaid, Double price, Integer availableSeats);
+
+    @Query("SELECT e FROM Event e LEFT JOIN FETCH e.location LEFT JOIN FETCH e.eventType")
+    List<Event> findAllWithDetails();
 }
