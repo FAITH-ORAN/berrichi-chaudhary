@@ -34,7 +34,7 @@ public class LocationServiceImpl implements LocationService {
                 .orElse(new Location());
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new RuntimeException("user not found"));
         location.setUser(user);
 
         location.setCity(locationDto.getCity());

@@ -1,6 +1,7 @@
 package com.party.backend.service;
 
 import com.party.backend.dto.ProfileRatingDto;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +12,7 @@ public interface ProfileRatingService {
 
     Optional<Double> getAverageRatingForUser(Long userId);
 
-    List<ProfileRatingDto> getAllRatingsForUser(Long userId);
+    Page<ProfileRatingDto> getAllRatingsForUser(Long userId, int page, int size);
 
     void deleteRating(Long ratedUserId, Long ratingUserId);
 

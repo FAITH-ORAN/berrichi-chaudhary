@@ -9,4 +9,6 @@ public class ProfileRatingDto {
     private String comment;
     private Long ratedUserId;
     private Long ratingUserId;
+    private String ratedUserPseudo;
+    private String ratingUserPseudo;
 }
