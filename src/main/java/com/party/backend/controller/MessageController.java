@@ -49,7 +49,6 @@ public class MessageController {
         return ResponseEntity.ok(messages);
     }
 
-
     @Operation(summary = "Obtenir les messages envoyés par l'utilisateur")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Messages envoyés avec succès"),
@@ -60,7 +59,6 @@ public class MessageController {
         Page<MessageDto> messages = messageService.getSentMessages(senderId, pageable);
         return ResponseEntity.ok(messages);
     }
-
 
     @Operation(summary = "Supprimer un message reçu")
     @ApiResponses(value = {

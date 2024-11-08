@@ -38,7 +38,6 @@ public class EventController {
         return ResponseEntity.ok(savedEvent);
     }
 
-
     @Operation(summary = "Get a paginated list of all events")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Events retrieved successfully")
@@ -64,7 +63,6 @@ public class EventController {
         return event.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
     @Operation(summary = "Update an event by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Event updated successfully"),
@@ -76,8 +74,6 @@ public class EventController {
         EventDto updatedEvent = eventService.updateEvent(id, eventDto);
         return ResponseEntity.ok(updatedEvent);
     }
-
-
 
     @Operation(summary = "Get an event with its location and organizer details by event ID")
     @ApiResponses(value = {
@@ -95,7 +91,6 @@ public class EventController {
             @ApiResponse(responseCode = "204", description = "Event deleted successfully"),
             @ApiResponse(responseCode = "404", description = "Event not found")
     })
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {
         eventService.deleteEvent(id);

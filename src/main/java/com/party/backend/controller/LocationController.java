@@ -44,7 +44,6 @@ public class LocationController {
         return ResponseEntity.ok(updatedLocation);
     }
 
-    // Endpoint pour ajouter ou mettre à jour la localisation d'un événement
     @PostMapping("/event/{eventId}")
     public ResponseEntity<LocationDto> saveOrUpdateEventLocation(
             @PathVariable Long eventId,
@@ -54,14 +53,12 @@ public class LocationController {
         return ResponseEntity.ok(updatedLocation);
     }
 
-    // Endpoint pour obtenir la localisation d'un événement
     @GetMapping("/event/{eventId}")
     public ResponseEntity<LocationDto> getEventLocation(@PathVariable Long eventId) {
         Optional<LocationDto> location = locationService.getEventLocation(eventId);
         return location.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    // Endpoint pour lister tous les événements par ville
     @GetMapping("/events/city/{city}")
     public ResponseEntity<List<LocationDto>> getAllEventsByCity(@PathVariable String city) {
         List<LocationDto> events = locationService.getAllEventsByCity(city);
@@ -73,6 +70,5 @@ public class LocationController {
         Optional<String> city = locationService.getCityByEventId(eventId);
         return city.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
-
 
 }
