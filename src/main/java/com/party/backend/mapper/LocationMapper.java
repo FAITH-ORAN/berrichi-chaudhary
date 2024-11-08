@@ -12,10 +12,10 @@ public interface LocationMapper {
     LocationMapper INSTANCE = Mappers.getMapper(LocationMapper.class);
 
     @Mapping(source = "user.id", target = "userId")
-   // @Mapping(source = "event.id", target = "eventId")
+    @Mapping(source = "event.id", target = "eventId")
     LocationDto toDto(Location location);
 
     @Mapping(source = "userId", target = "user.id")
-   // @Mapping(source = "eventId", target = "event.id")
+    @Mapping(source = "eventId", target = "event.id")
     Location toEntity(LocationDto locationDto);
 }

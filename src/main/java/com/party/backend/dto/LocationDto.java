@@ -7,5 +7,5 @@ public class LocationDto {
     private String city;
     private String address;
     private Long userId;
-    //private Long eventId;
+    private Long eventId;
 }

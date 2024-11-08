@@ -18,10 +18,22 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
     @Query("SELECT l FROM Location l WHERE l.user.id = :userId")
     Optional<Location> findByUserId(@Param("userId") Long userId);
 
+    Optional<Location> findByEventId(Long eventId);
 
-   /* @Query("SELECT l.city, l.address FROM Location l WHERE l.event.id = :eventId")
-    Optional<Object[]> findCityAndAddressByEventId(@Param("eventId") Long eventId);*/
-   /* @Query("SELECT l FROM Location l WHERE l.city = :city AND l.event IS NOT NULL")
-    List<Location> findAllEventsByCity(@Param("city") String city);*/
+    List<Location> findAllEventsByCity(String city);
+
+    Optional<String> findCityByEventId(Long eventId);
+
+    /*
+     * @Query("SELECT l.city, l.address FROM Location l WHERE l.event.id = :eventId"
+     * )
+     * Optional<Object[]> findCityAndAddressByEventId(@Param("eventId") Long
+     * eventId);
+     */
+    /*
+     * @Query("SELECT l FROM Location l WHERE l.city = :city AND l.event IS NOT NULL"
+     * )
+     * List<Location> findAllEventsByCity(@Param("city") String city);
+     */
 
 }

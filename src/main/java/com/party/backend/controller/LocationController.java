@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -43,7 +44,6 @@ public class LocationController {
         return ResponseEntity.ok(updatedLocation);
     }
 
-    /* Endpoints pour la localisation des événements (commenté pour futur usage)
     // Endpoint pour ajouter ou mettre à jour la localisation d'un événement
     @PostMapping("/event/{eventId}")
     public ResponseEntity<LocationDto> saveOrUpdateEventLocation(
@@ -67,7 +67,12 @@ public class LocationController {
         List<LocationDto> events = locationService.getAllEventsByCity(city);
         return ResponseEntity.ok(events);
     }
-    */
+
+    @GetMapping("/event/{eventId}/city")
+    public ResponseEntity<String> getCityByEventId(@PathVariable Long eventId) {
+        Optional<String> city = locationService.getCityByEventId(eventId);
+        return city.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
 
 
 }
