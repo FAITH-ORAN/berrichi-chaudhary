@@ -4,6 +4,9 @@ import com.party.backend.dto.EventDto;
 import com.party.backend.service.EventService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +31,12 @@ public class EventController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EventDto>> getAllEvents() {
-        List<EventDto> events = eventService.getAllEvents();
+    public ResponseEntity<Page<EventDto>> getAllEvents(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<EventDto> events = eventService.getAllEvents(pageable);
         return ResponseEntity.ok(events);
     }
 

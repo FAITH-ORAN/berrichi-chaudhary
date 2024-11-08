@@ -11,6 +11,8 @@ import com.party.backend.repository.LocationRepository;
 import com.party.backend.repository.UserRepository;
 import com.party.backend.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -61,11 +63,34 @@ public class EventServiceImpl implements EventService {
 
 
     @Override
-    public List<EventDto> getAllEvents() {
-        return eventRepository.findAllWithDetails()
-                .stream()
-                .map(eventMapper::toDto)
-                .collect(Collectors.toList());
+    public Page<EventDto> getAllEvents(Pageable pageable) {
+        Page<Event> eventsPage = eventRepository.findAllWithDetails(pageable);
+
+        return eventsPage.map(event -> {
+            EventDto eventDto = eventMapper.toDto(event);
+
+            // Set LocationDto
+            if (event.getLocation() != null) {
+                LocationDto locationDto = new LocationDto();
+                locationDto.setId(event.getLocation().getId());
+                locationDto.setCity(event.getLocation().getCity());
+                locationDto.setAddress(event.getLocation().getAddress());
+                locationDto.setEventId(event.getId());
+
+                if (event.getLocation().getUser() != null) {
+                    locationDto.setUserId(event.getLocation().getUser().getId());
+                }
+
+                eventDto.setLocation(locationDto);
+            }
+
+            // Set Organizer pseudo
+            if (event.getOrganizer() != null) {
+                eventDto.setOrganizerPseudo(event.getOrganizer().getPseudo());
+            }
+
+            return eventDto;
+        });
     }
 
     @Override
