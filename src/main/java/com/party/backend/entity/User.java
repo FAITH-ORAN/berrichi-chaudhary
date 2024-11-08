@@ -16,7 +16,6 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "users_id")
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -43,36 +42,16 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Location location;
 
-    // Relation avec ProfileRating en tant que 'ratedUser' (l'utilisateur noté)
     @OneToMany(mappedBy = "ratedUser", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ProfileRating> receivedRatings;
 
-    // Relation avec ProfileRating en tant que 'ratingUser' (l'utilisateur qui note)
     @OneToMany(mappedBy = "ratingUser", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ProfileRating> givenRatings;
 
-    /* Relation avec Participation (One-to-Many), avec FetchType.LAZY
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private List<Participation> participations;
-
-
-    // Relation avec Message (One-to-Many pour l’envoi et la réception), avec FetchType.LAZY
-    @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "from_user_id")
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> sentMessages;
 
-    @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "to_user_id")
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> receivedMessages;
 
-    // Relation avec Proposition (One-to-Many), avec FetchType.LAZY
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private List<Proposition> propositions;
-
-    // Relation avec Vote (One-to-Many), avec FetchType.LAZY
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private List<Vote> votes;*/
 }

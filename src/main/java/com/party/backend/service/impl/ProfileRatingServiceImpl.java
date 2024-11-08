@@ -11,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,9 +48,9 @@ public class ProfileRatingServiceImpl implements ProfileRatingService {
                 .orElse(new ProfileRating());
 
         User ratedUser = userRepository.findById(ratedUserId)
-                .orElseThrow(() -> new RuntimeException("Utilisateur noté non trouvé"));
+                .orElseThrow(() -> new RuntimeException("user nor found"));
         User ratingUser = userRepository.findById(ratingUserId)
-                .orElseThrow(() -> new RuntimeException("Utilisateur évaluateur non trouvé"));
+                .orElseThrow(() -> new RuntimeException("user not found "));
 
         profileRating.setRatedUser(ratedUser);
         profileRating.setRatingUser(ratingUser);
@@ -54,7 +58,12 @@ public class ProfileRatingServiceImpl implements ProfileRatingService {
         profileRating.setComment(profileRatingDto.getComment());
 
         profileRating = profileRatingRepository.save(profileRating);
-        return profileRatingMapper.toDto(profileRating);
+
+        ProfileRatingDto savedDto = profileRatingMapper.toDto(profileRating);
+        savedDto.setRatedUserPseudo(ratedUser.getPseudo());
+        savedDto.setRatingUserPseudo(ratingUser.getPseudo());
+
+        return savedDto;
     }
 
     @Override
@@ -64,12 +73,25 @@ public class ProfileRatingServiceImpl implements ProfileRatingService {
     }
 
     @Override
-    //@Cacheable(value = "profileRatings", key = "#userId")
-    public List<ProfileRatingDto> getAllRatingsForUser(Long userId) {
-        return profileRatingRepository.findAllByRatedUserIdWithRatingUser(userId)
-                .stream()
-                .map(profileRatingMapper::toDto)
+    public Page<ProfileRatingDto> getAllRatingsForUser(Long userId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Object[]> ratingsPage = profileRatingRepository.findAllByRatedUserIdWithRatingAndRatedUserPseudo(userId, pageable);
+
+        List<ProfileRatingDto> ratingDtos = ratingsPage.getContent().stream()
+                .map(result -> {
+                    ProfileRatingDto dto = new ProfileRatingDto();
+                    dto.setId((Long) result[0]);
+                    dto.setRate((Integer) result[1]);
+                    dto.setComment((String) result[2]);
+                    dto.setRatedUserId((Long) result[3]);
+                    dto.setRatedUserPseudo((String) result[4]);
+                    dto.setRatingUserId((Long) result[5]);
+                    dto.setRatingUserPseudo((String) result[6]);
+                    return dto;
+                })
                 .collect(Collectors.toList());
+
+        return new PageImpl<>(ratingDtos, pageable, ratingsPage.getTotalElements());
     }
 
     @Override

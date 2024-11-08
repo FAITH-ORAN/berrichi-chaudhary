@@ -1,6 +1,5 @@
 package com.party.backend.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Data
