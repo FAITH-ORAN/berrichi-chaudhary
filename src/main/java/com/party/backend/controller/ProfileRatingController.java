@@ -23,6 +23,7 @@ public class ProfileRatingController {
     public ProfileRatingController(ProfileRatingService profileRatingService) {
         this.profileRatingService = profileRatingService;
     }
+
     @Operation(summary = "Ajouter  une note et un commentaire")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Note / commentaire ajouté "),
@@ -37,6 +38,7 @@ public class ProfileRatingController {
         ProfileRatingDto updatedRating = profileRatingService.addOrUpdateRating(ratedUserId, ratingUserId, profileRatingDto);
         return ResponseEntity.ok(updatedRating);
     }
+
     @Operation(summary = "Obtenir la moyenne des notes pour un utilisateur")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Moyenne des notes"),
@@ -47,6 +49,7 @@ public class ProfileRatingController {
         Optional<Double> averageRating = profileRatingService.getAverageRatingForUser(userId);
         return averageRating.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
+
     @Operation(summary = "Obtenir toutes les notes pour un utilisateur")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des notes"),
@@ -61,6 +64,7 @@ public class ProfileRatingController {
         Page<ProfileRatingDto> ratings = profileRatingService.getAllRatingsForUser(userId, page, size);
         return ResponseEntity.ok(ratings);
     }
+
     @Operation(summary = "Mettre à jour une note ou/et un commentaire")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Note / commentaire mise à jour "),

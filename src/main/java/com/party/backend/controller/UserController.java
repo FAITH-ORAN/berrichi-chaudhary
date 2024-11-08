@@ -24,6 +24,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
     @Operation(summary = "Créer un nouvel utilisateur")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Utilisateur créé avec succès"),
@@ -34,6 +35,7 @@ public class UserController {
         UserDto savedUser = userService.saveUser(userDto);
         return ResponseEntity.ok(savedUser);
     }
+
     @Operation(summary = "Obtenir un utilisateur par ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Utilisateur trouvé"),
@@ -44,6 +46,7 @@ public class UserController {
         Optional<UserDto> user = userService.getUserById(id);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
     @Operation(summary = "Obtenir un utilisateur par email")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Utilisateur trouvé"),
@@ -54,6 +57,7 @@ public class UserController {
         Optional<UserDto> user = userService.getUserByEmail(email);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
     @Operation(summary = "Mettre à jour un utilisateur")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Utilisateur mis à jour avec succès"),
