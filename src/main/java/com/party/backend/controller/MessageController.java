@@ -33,7 +33,6 @@ public class MessageController {
             @ApiResponse(responseCode = "400", description = "Requête invalide")
     })
     @PostMapping("/send")
-   // @CachePut(value = "messages", key = "#result.id")
     public ResponseEntity<MessageDto> sendMessage(@RequestBody MessageDto messageDto) {
         MessageDto savedMessage = messageService.sendMessage(messageDto);
         return ResponseEntity.ok(savedMessage);
@@ -69,7 +68,6 @@ public class MessageController {
             @ApiResponse(responseCode = "404", description = "Message non trouvé")
     })
     @DeleteMapping("/received/{receiverId}/message/{messageId}")
-    @CacheEvict(value = "receivedMessages", key = "#receiverId")
     public ResponseEntity<Void> deleteReceivedMessage(
             @PathVariable Long receiverId,
             @PathVariable Long messageId) {
@@ -83,7 +81,6 @@ public class MessageController {
             @ApiResponse(responseCode = "404", description = "Message non trouvé")
     })
     @DeleteMapping("/sent/{senderId}/message/{messageId}")
-    @CacheEvict(value = "sentMessages", key = "#senderId")
     public ResponseEntity<Void> deleteSentMessage(
             @PathVariable Long senderId,
             @PathVariable Long messageId) {

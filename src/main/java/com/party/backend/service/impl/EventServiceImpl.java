@@ -11,6 +11,9 @@ import com.party.backend.repository.LocationRepository;
 import com.party.backend.repository.UserRepository;
 import com.party.backend.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -40,6 +43,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @CachePut(value = "events", key = "#result.id")
     public EventDto saveEvent(EventDto eventDto) {
         Event event = eventMapper.toEntity(eventDto);
 
@@ -57,12 +61,14 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Cacheable(value = "events", key = "#id")
     public Optional<EventDto> getEventById(Long id) {
         return eventRepository.findById(id).map(eventMapper::toDto);
     }
 
 
     @Override
+    @Cacheable(value = "eventsList")
     public Page<EventDto> getAllEvents(Pageable pageable) {
         Page<Event> eventsPage = eventRepository.findAllWithDetails(pageable);
 
@@ -111,6 +117,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @CachePut(value = "events", key = "#id")
     public EventDto updateEvent(Long id, EventDto eventDto) {
         Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Event not found with ID: " + id));
@@ -127,6 +134,7 @@ public class EventServiceImpl implements EventService {
 
 
     @Override
+    @Cacheable(value = "eventDetails", key = "#eventId")
     public Optional<EventDto> getEventWithLocationAndOrganizer(Long eventId) {
         Optional<Event> eventOpt = eventRepository.findEventWithLocationAndOrganizer(eventId);
         return eventOpt.map(event -> {
@@ -155,6 +163,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @CacheEvict(value = "events", key = "#id")
     public void deleteEvent(Long id) {
         Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Event not found with ID: " + id));

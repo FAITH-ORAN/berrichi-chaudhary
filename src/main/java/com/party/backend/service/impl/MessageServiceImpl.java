@@ -8,6 +8,7 @@ import com.party.backend.repository.MessageRepository;
 import com.party.backend.repository.UserRepository;
 import com.party.backend.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -62,11 +63,13 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @CacheEvict(value = "receivedMessages", key = "#receiverId")
     public void deleteReceivedMessage(Long messageId, Long receiverId) {
         messageRepository.deleteReceivedMessage(messageId, receiverId);
     }
 
     @Override
+    @CacheEvict(value = "sentMessages", key = "#senderId")
     public void deleteSentMessage(Long messageId, Long senderId) {
         messageRepository.deleteSentMessage(messageId, senderId);
     }
